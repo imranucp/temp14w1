@@ -23,7 +23,7 @@ jobs:
           npx stylelint "**/*.css"
       - name: Try Building the Webiste
         run: |
-          npx parcel ./src/index.html --dist-dir "./dev" --public-url "./"
+          npx parcel build ./src/index.html --dist-dir "./dev" --public-url "./"
       - name: End Of Linting Job
         run: | 
           echo "End of Linting Job"
