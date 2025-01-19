@@ -1,6 +1,6 @@
 name: wf-prod-deploy
 on: 
-  puhs:
+  push:
     branches:
       - production
 jobs:
