@@ -1,0 +1,40 @@
+name: wf-prod-deploy
+on: 
+  puhs:
+    branches:
+      - production
+jobs:
+  prod-lint-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: chekcout repo in production
+        uses: actions/checkout@v4
+      - name: Lint HTML and CSS
+        run: |
+          npx htmlhint "**/*.html"
+          npx stylelint "**/*.css"
+      - name: Build with Parcel For Prod
+        run: |
+          npx parcel build "./src/index.html" --dist-dir "./dist" --public-url "./"
+      - name: Upload GitHub Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          name: prod-artifact
+          path: "./dist"
+          
+  prod-dep-job:
+    needs: prod-lint-job
+    permissions:
+      pages: write
+      id-token: write      
+    runs-on: ubuntu-latest   
+    steps:
+      - name: Checkout Repo for Deployement
+        uses: actions/checkout@v4
+      - name: Deploy Artifacts
+        uses: actions/deploy-pages@v4
+        with:
+          token: ${{github.token}}
+          artifact_name: prod-artifact
+      - name: Deployment End
+        run: echo "Deployement Succeeded"
