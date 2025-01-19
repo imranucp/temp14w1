@@ -15,7 +15,8 @@ jobs:
       - name: Upload GitHub Artifacts
         uses: actions/upload-pages-artifact@v3
         with:
-          name: release-artifact
+          name: "release-artifact"
+          path: "./release"
   deploye-job:
     needs: "build-job"
     permissions:
