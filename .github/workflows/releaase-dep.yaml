@@ -1,0 +1,31 @@
+name: wf-release-dep
+on:
+  push:
+    branches:
+      - "release/**"
+jobs:
+  build-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+      - name: Build Artifacts
+        run: |
+          npx parcel build "./src/index.html" --dist-dir "./release" --public-url "./"
+      - name: Upload GitHub Artifacts
+        uses: actions/upload-pages-artifact@v3
+        with:
+          name: release-artifact
+  deploye-job:
+    needs: "build-job"
+    permissions:
+      pages: write
+      id-token: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deployement Step
+        uses: actions/deploy-pages@v4
+        with:
+          artifact_name: release-artifact
+          token: ${{github.token}}
+
