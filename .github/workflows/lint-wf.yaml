@@ -1,0 +1,30 @@
+name: lint-wf
+on:
+  pull_request: 
+    branches:
+      - develop
+jobs:
+  linting-job:
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Welcome Steps
+        run: echo "Allah Please Help Me"
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+      - name: Install HTMLHint & StyleLint
+        run: |
+          npm install --save-dev htmlhint stylelint
+          echo "_____Confirming the Installation_____"
+          npm list --depth=0
+      - name: Lint HTML and CSS Files
+        run: |
+          npx htmlhint "**/*.html"
+          npx stylelint "**/*.css"
+      - name: Try Building the Webiste
+        run: |
+          npx parcel build ./src/index.html --dist-dir "./dev" --public-url "./"
+      - name: End Of Linting Job
+        run: | 
+          echo "End of Linting Job"
+          echo "Allah Always Help Me"
