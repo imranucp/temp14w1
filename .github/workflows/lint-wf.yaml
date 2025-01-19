@@ -16,7 +16,7 @@ jobs:
         run: |
           npm install --save-dev htmlhint stylelint
           echo "_____Confirming the Installation_____"
-          npm list depth=0
+          npm list --depth=0
       - name: Lint HTML and CSS Files
         run: |
           npx htmlhint "**/*.html"
