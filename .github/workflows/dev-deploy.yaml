@@ -1,6 +1,6 @@
 name: dev-deploye-wf
 on: 
-  puhs:
+  push:
     branches:
       - main
 jobs:
